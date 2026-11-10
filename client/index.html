@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IEM Admission Portal — Institute of Engineering & Management, Kolkata</title>
+  
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons 1.11.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  
+  <!-- React 18 & ReactDOM 18 -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel Standalone for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --iem-navy: #0a2240;
+      --iem-navy-light: #163a66;
+      --iem-gold: #ffb400;
+      --iem-gold-hover: #e09900;
+      --iem-accent: #0284c7;
+      --iem-bg: #f5f8fc;
+      --iem-card-bg: #ffffff;
+      --iem-border: #e2e8f0;
+      --iem-text-main: #1e293b;
+      --iem-text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--iem-bg);
+      color: var(--iem-text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, h5, h6, .navbar-brand-iem {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    #root {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .iem-topbar {
+      background-color: #05162a;
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      padding: 6px 0;
+      border-bottom: 2px solid var(--iem-gold);
+    }
+    .iem-topbar a { color: #cbd5e1; text-decoration: none; }
+    .iem-topbar a:hover { color: var(--iem-gold); }
+
+    .navbar-iem {
+      background-color: var(--iem-navy) !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand-iem {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .iem-logo-badge {
+      background: linear-gradient(135deg, var(--iem-gold), #ff8c00);
+      color: #05162a;
+      font-weight: 800;
+      font-size: 1.4rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(255, 180, 0, 0.4);
+    }
+
+    .iem-brand-title {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .iem-brand-sub {
+      color: var(--iem-gold);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-link-iem {
+      color: #e2e8f0 !important;
+      font-weight: 500;
+      font-size: 0.92rem;
+      padding: 8px 14px !important;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    .nav-link-iem:hover, .nav-link-iem.active {
+      color: var(--iem-gold) !important;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .quick-nav-pill {
+      background-color: rgba(255, 180, 0, 0.15);
+      border: 1px solid var(--iem-gold);
+      color: var(--iem-gold);
+      font-weight: 600;
+      font-size: 0.82rem;
+      border-radius: 20px;
+      padding: 5px 12px;
+    }
+    .quick-nav-pill:hover {
+      background-color: var(--iem-gold);
+      color: #05162a;
+    }
+
+    .iem-hero {
+      background: linear-gradient(135deg, rgba(10, 34, 64, 0.95), rgba(22, 58, 102, 0.92)),
+                  url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: white;
+      padding: 60px 0 80px 0;
+      position: relative;
+    }
+
+    .badge-gold {
+      background-color: var(--iem-gold);
+      color: #05162a;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-iem-primary {
+      background-color: var(--iem-gold);
+      color: #05162a;
+      font-weight: 700;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(255, 180, 0, 0.3);
+      transition: all 0.2s ease;
+    }
+    .btn-iem-primary:hover {
+      background-color: var(--iem-gold-hover);
+      color: #05162a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 180, 0, 0.4);
+    }
+
+    .iem-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--iem-border);
+      box-shadow: 0 4px 12px rgba(10, 34, 64, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .iem-card:hover {
+      box-shadow: 0 8px 20px rgba(10, 34, 64, 0.08);
+    }
+
+    /* Stepper */
+    .stepper-wrapper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .stepper-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      right: 30px;
+      height: 3px;
+      background-color: #e2e8f0;
+      z-index: 0;
+    }
+    .stepper-item {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+    }
+    .step-counter {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e2e8f0;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 8px;
+      border: 3px solid white;
+      transition: all 0.2s ease;
+    }
+    .stepper-item.completed .step-counter {
+      background-color: #10b981;
+      color: white;
+    }
+    .stepper-item.active .step-counter {
+      background-color: var(--iem-navy);
+      color: var(--iem-gold);
+      border-color: var(--iem-gold);
+      box-shadow: 0 0 0 3px rgba(255, 180, 0, 0.3);
+    }
+    .step-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--iem-text-muted);
+    }
+
+    /* Upload Dropzone */
+    .upload-dropzone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 24px 16px;
+      text-align: center;
+      background-color: #f8fafc;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .upload-dropzone:hover {
+      border-color: var(--iem-gold);
+      background-color: #fffdf5;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 5px;
+      bottom: 5px;
+      width: 2px;
+      background-color: #e2e8f0;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -30px;
+      top: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: white;
+      border: 3px solid #cbd5e1;
+    }
+    .timeline-dot.done {
+      background-color: #10b981;
+      border-color: #10b981;
+    }
+    .timeline-dot.current {
+      background-color: var(--iem-gold);
+      border-color: var(--iem-navy);
+    }
+
+    /* Printable Receipt */
+    .admission-receipt {
+      background-color: #ffffff;
+      border: 2px solid #0a2240;
+      border-radius: 8px;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+    .receipt-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(10, 34, 64, 0.04);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      .printable-area, .printable-area * { visibility: visible; }
+      .printable-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+      }
+      .no-print { display: none !important; }
+    }
+
+    .iem-footer {
+      background-color: #06182c;
+      color: #94a3b8;
+      padding: 50px 0 20px 0;
+      margin-top: auto;
+      border-top: 4px solid var(--iem-gold);
+    }
+    .iem-footer h6 {
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+    .iem-footer a { color: #94a3b8; text-decoration: none; }
+    .iem-footer a:hover { color: var(--iem-gold); }
+    .iem-footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 20px;
+      margin-top: 40px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- React Standalone Application Script -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // --- DATA ---
+    const API_BASE_URL = 'http://localhost:5000/api';
+
+    // Helper: Async fetch with JWT token and fallback
+    async function apiRequest(endpoint, method = 'GET', body = null) {
+      try {
+        const token = localStorage.getItem('iem_token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+        
+        const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+          method,
+          headers,
+          body: body ? JSON.stringify(body) : null
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        // Fallback silently to client-side state if backend server is not running
+      }
+      return null;
+    }
+
+    const INITIAL_PROGRAMS = [
+      { id: 'btech-cse', name: 'B.Tech - Computer Science & Engineering', category: 'Engineering (UG)', duration: '4 Years', seats: 180, filled: 142, eligibility: '10+2 with PCM (Min 60%). Valid WBJEE / JEE Main rank.', icon: 'bi-laptop' },
+      { id: 'btech-cseal', name: 'B.Tech - CSE (AI & Machine Learning)', category: 'Engineering (UG)', duration: '4 Years', seats: 120, filled: 110, eligibility: '10+2 with PCM (Min 60%). Valid WBJEE / JEE Main rank.', icon: 'bi-cpu' },
+      { id: 'btech-it', name: 'B.Tech - Information Technology', category: 'Engineering (UG)', duration: '4 Years', seats: 120, filled: 98, eligibility: '10+2 with PCM (Min 60%). Valid WBJEE / JEE Main rank.', icon: 'bi-hdd-network' },
+      { id: 'btech-ece', name: 'B.Tech - Electronics & Communication', category: 'Engineering (UG)', duration: '4 Years', seats: 120, filled: 85, eligibility: '10+2 with PCM (Min 60%). Valid WBJEE / JEE Main rank.', icon: 'bi-broadcast-pin' },
+      { id: 'bca', name: 'BCA (Bachelor of Computer Applications)', category: 'Computer Applications (UG)', duration: '3 Years', seats: 120, filled: 95, eligibility: '10+2 with Mathematics / CS / IT / Statistics (Min 50%).', icon: 'bi-code-slash' },
+      { id: 'mca', name: 'MCA (Master of Computer Applications)', category: 'Computer Applications (PG)', duration: '2 Years', seats: 60, filled: 48, eligibility: 'BCA / B.Sc (CS/IT) or graduation with Math at 10+2 / Degree.', icon: 'bi-diagram-3' },
+      { id: 'mba', name: 'MBA (Master of Business Administration)', category: 'Management (PG)', duration: '2 Years', seats: 120, filled: 92, eligibility: 'Graduation in any discipline with min 50%. CAT / MAT / IEMJEE.', icon: 'bi-graph-up-arrow' }
+    ];
+
+    const IMPORTANT_NOTICES = [
+      { id: 1, date: '10 Nov 2026', title: 'Phase 1 Online Admission Registration Open for 2026-27 Academic Session', isNew: true },
+      { id: 2, date: '08 Nov 2026', title: 'IEMJEE 2026 Examination Slot Booking now available for All B.Tech / BCA aspirants', isNew: true },
+      { id: 3, date: '01 Nov 2026', title: 'Schedule for Verification of Academic Documents and Category Certificates announced', isNew: false },
+      { id: 4, date: '25 Oct 2026', title: 'IEM Placement Milestone: 100% placement achieved with Highest CTC of ₹72 LPA', isNew: false }
+    ];
+
+    const INITIAL_APPLICANT = {
+      id: 'usr_01',
+      applicationNumber: 'IEM-2026-8492',
+      fullName: 'Arindam Mukherjee',
+      email: 'arindam.mukherjee@example.com',
+      phone: '+91 98301 23456',
+      gender: 'Male',
+      dob: '2006-08-14',
+      category: 'General',
+      bloodGroup: 'O+',
+      nationality: 'Indian',
+      guardianName: 'Subhash Mukherjee',
+      guardianRelation: 'Father',
+      guardianPhone: '+91 98310 98765',
+      guardianOccupation: 'Senior Executive, PSU',
+      annualFamilyIncome: '1200000',
+      address: 'Salt Lake City, Sector 2, Block AE-14',
+      city: 'Kolkata',
+      state: 'West Bengal',
+      pincode: '700091',
+      academics: {
+        class10: { board: 'ICSE', school: 'South Point High School, Kolkata', passingYear: '2022', percentage: '94.2' },
+        class12: { board: 'ISC', school: 'South Point High School, Kolkata', passingYear: '2024', physics: '92', chemistry: '89', maths: '95', pcmPercentage: '92.0', overallPercentage: '93.5' },
+        entranceExam: { examType: 'WBJEE', rollNumber: '240182903', rank: '1420', score: '112.5' }
+      },
+      preferences: [
+        { order: 1, course: 'B.Tech - Computer Science & Engineering' },
+        { order: 2, course: 'B.Tech - CSE (AI & Machine Learning)' },
+        { order: 3, course: 'B.Tech - Information Technology' }
+      ],
+      documents: {
+        photo: { uploaded: true, filename: 'arindam_photo.jpg', status: 'verified', size: '142 KB' },
+        signature: { uploaded: true, filename: 'arindam_signature.png', status: 'verified', size: '86 KB' },
+        class10Marksheet: { uploaded: true, filename: 'icse_marksheet.pdf', status: 'verified', size: '1.2 MB' },
+        class12Marksheet: { uploaded: true, filename: 'isc_marksheet.pdf', status: 'verified', size: '1.4 MB' },
+        rankCard: { uploaded: true, filename: 'wbjee_rankcard_2026.pdf', status: 'verified', size: '920 KB' }
+      },
+      payment: {
+        status: 'completed',
+        amount: 1000,
+        transactionId: 'TXN-IEM-93821039',
+        paymentDate: '2026-11-05 14:32 IST',
+        paymentMethod: 'UPI (Google Pay)'
+      },
+      status: 'verified',
+      allottedBranch: 'B.Tech - Computer Science & Engineering',
+      allottedCategory: 'Open Merit Round 1',
+      adminRemarks: 'Original ISC Marksheet and WBJEE Rank card verified. Qualified for B.Tech CSE under general merit quota.',
+      submittedAt: '2026-11-05 14:35 IST',
+      lastUpdated: '2026-11-08 11:20 IST'
+    };
+
+    const SAMPLE_ALL_APPLICANTS = [
+      INITIAL_APPLICANT,
+      {
+        id: 'usr_02',
+        applicationNumber: 'IEM-2026-8493',
+        fullName: 'Sneha Sen',
+        email: 'sneha.sen@example.com',
+        phone: '+91 98745 61230',
+        gender: 'Female',
+        dob: '2006-04-22',
+        category: 'General',
+        bloodGroup: 'B+',
+        address: 'Behala Chowrasta, Kolkata - 700034',
+        city: 'Kolkata',
+        state: 'West Bengal',
+        academics: {
+          class10: { board: 'WBBSE', school: 'Bidhan Nagar Govt High School', passingYear: '2022', percentage: '91.0' },
+          class12: { board: 'WBCHSE', school: 'Bidhan Nagar Govt High School', passingYear: '2024', pcmPercentage: '88.6', overallPercentage: '89.2' },
+          entranceExam: { examType: 'JEE Main', rollNumber: '240310892', rank: '18450', score: '96.2 %ile' }
+        },
+        preferences: [{ order: 1, course: 'B.Tech - Information Technology' }],
+        documents: {
+          class12Marksheet: { uploaded: true, filename: 'wbchse_class12.pdf', status: 'verified' },
+          rankCard: { uploaded: true, filename: 'jeemain_rankcard.pdf', status: 'verified' }
+        },
+        payment: { status: 'completed', amount: 1000, transactionId: 'TXN-IEM-93821044', paymentDate: '2026-11-06 10:15 IST' },
+        status: 'submitted',
+        allottedBranch: null,
+        adminRemarks: 'Pending initial scrutiny by admission committee.'
+      },
+      {
+        id: 'usr_03',
+        applicationNumber: 'IEM-2026-8494',
+        fullName: 'Rahul Chakraborty',
+        email: 'rahul.c@example.com',
+        phone: '+91 98311 44556',
+        gender: 'Male',
+        category: 'General',
+        academics: {
+          class12: { board: 'CBSE', pcmPercentage: '79.2' },
+          entranceExam: { examType: 'IEMJEE', rollNumber: 'IEM249102', rank: '412', score: '88/100' }
+        },
+        preferences: [{ order: 1, course: 'B.Tech - Electronics & Communication' }],
+        status: 'under_review',
+        adminRemarks: 'Marksheets under verification with CBSE database.'
+      },
+      {
+        id: 'usr_04',
+        applicationNumber: 'IEM-2026-8495',
+        fullName: 'Priya Sharma',
+        email: 'priya.sharma@example.com',
+        phone: '+91 97480 33221',
+        gender: 'Female',
+        category: 'General',
+        academics: {
+          class12: { board: 'CBSE', pcmPercentage: '94.8' },
+          entranceExam: { examType: 'WBJEE', rollNumber: '240182811', rank: '890', score: '124.0' }
+        },
+        preferences: [{ order: 1, course: 'B.Tech - Computer Science & Engineering' }],
+        status: 'seat_allotted',
+        allottedBranch: 'B.Tech - Computer Science & Engineering',
+        adminRemarks: 'Direct round 1 seat allotted based on WBJEE Rank 890.'
+      },
+      {
+        id: 'usr_05',
+        applicationNumber: 'IEM-2026-8496',
+        fullName: 'Debanjan Roy',
+        email: 'debanjan.roy@example.com',
+        phone: '+91 98322 77889',
+        gender: 'Male',
+        category: 'OBC-A',
+        academics: {
+          class12: { board: 'WBCHSE', pcmPercentage: '68.0' },
+          entranceExam: { examType: 'WBJEE', rollNumber: '240199120', rank: '14200' }
+        },
+        preferences: [{ order: 1, course: 'B.Tech - Electrical Engineering' }],
+        status: 'correction_required',
+        adminRemarks: 'Class 12 marksheet uploaded is blurry. Please re-upload a clear scanned copy.'
+      }
+    ];
+
+    // --- NAVBAR ---
+    function Navbar({ currentPage, setCurrentPage, authUser, setAuthUser, setSelectedApplicantId }) {
+      const pagesList = [
+        { id: 'home', label: '1. Home Page', icon: 'bi-house' },
+        { id: 'register', label: '2. Applicant Registration', icon: 'bi-person-plus' },
+        { id: 'login', label: '3. Applicant Login', icon: 'bi-box-arrow-in-right' },
+        { id: 'forgot-password', label: '4. Forgot Password', icon: 'bi-key' },
+        { id: 'applicant-dashboard', label: '5. Applicant Dashboard', icon: 'bi-speedometer2' },
+        { id: 'application-form', label: '6. Admission Application Form', icon: 'bi-pencil-square' },
+        { id: 'document-upload', label: '7. Document Upload Page', icon: 'bi-cloud-arrow-up' },
+        { id: 'payment', label: '8. Payment Page', icon: 'bi-credit-card' },
+        { id: 'application-status', label: '9. Application Status & Receipt', icon: 'bi-file-earmark-check' },
+        { id: 'admin-login', label: '10. Admin Login', icon: 'bi-shield-lock' },
+        { id: 'admin-dashboard', label: '11. Admin Dashboard', icon: 'bi-kanban' },
+        { id: 'application-verification', label: '12. Application Verification', icon: 'bi-check2-circle' },
+      ];
+
+      return (
+        <header className="sticky-top">
+          <div className="iem-topbar d-none d-md-block">
+            <div className="container d-flex justify-content-between align-items-center">
+              <div>
+                <span className="me-3"><i className="bi bi-telephone-fill text-warning me-1"></i> Helpline: +91 33 2357 2995 / 2059</span>
+                <span><i className="bi bi-envelope-fill text-warning me-1"></i> admissions@iemcal.com</span>
+              </div>
+              <div className="d-flex align-items-center gap-3">
+                <span className="badge bg-warning text-dark fw-bold">Admissions Open 2026-27</span>
+                <span>NAAC 'A' Grade | NBA Accredited</span>
+              </div>
+            </div>
+          </div>
+
+          <nav className="navbar navbar-expand-lg navbar-iem navbar-dark">
+            <div className="container">
+              <button 
+                type="button" 
+                className="navbar-brand-iem btn btn-link p-0 text-start"
+                onClick={() => setCurrentPage('home')}
+              >
+                <div className="iem-logo-badge">IEM</div>
+                <div>
+                  <div className="iem-brand-title">Institute of Engineering & Management</div>
+                  <div className="iem-brand-sub">Kolkata, West Bengal • Established 1989</div>
+                </div>
+              </button>
+
+              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+
+              <div className="collapse navbar-collapse" id="navContent">
+                <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+                  <li className="nav-item">
+                    <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'home' ? 'active' : ''}`} onClick={() => setCurrentPage('home')}>
+                      <i className="bi bi-house me-1"></i> Home
+                    </button>
+                  </li>
+                  {authUser?.role === 'applicant' && (
+                    <>
+                      <li className="nav-item">
+                        <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'applicant-dashboard' ? 'active' : ''}`} onClick={() => setCurrentPage('applicant-dashboard')}>
+                          <i className="bi bi-speedometer2 me-1"></i> Dashboard
+                        </button>
+                      </li>
+                      <li className="nav-item">
+                        <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'application-form' ? 'active' : ''}`} onClick={() => setCurrentPage('application-form')}>
+                          <i className="bi bi-pencil-square me-1"></i> Form
+                        </button>
+                      </li>
+                      <li className="nav-item">
+                        <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'document-upload' ? 'active' : ''}`} onClick={() => setCurrentPage('document-upload')}>
+                          <i className="bi bi-cloud-arrow-up me-1"></i> Docs
+                        </button>
+                      </li>
+                      <li className="nav-item">
+                        <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'payment' ? 'active' : ''}`} onClick={() => setCurrentPage('payment')}>
+                          <i className="bi bi-credit-card me-1"></i> Fee
+                        </button>
+                      </li>
+                      <li className="nav-item">
+                        <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'application-status' ? 'active' : ''}`} onClick={() => setCurrentPage('application-status')}>
+                          <i className="bi bi-file-earmark-check me-1"></i> Status
+                        </button>
+                      </li>
+                    </>
+                  )}
+                  {authUser?.role === 'admin' && (
+                    <>
+                      <li className="nav-item">
+                        <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'admin-dashboard' ? 'active' : ''}`} onClick={() => setCurrentPage('admin-dashboard')}>
+                          <i className="bi bi-kanban me-1"></i> Admin Console
+                        </button>
+                      </li>
+                      <li className="nav-item">
+                        <button className={`nav-link nav-link-iem btn btn-link ${currentPage === 'application-verification' ? 'active' : ''}`} onClick={() => { setSelectedApplicantId('usr_01'); setCurrentPage('application-verification'); }}>
+                          <i className="bi bi-check2-circle me-1"></i> Verification
+                        </button>
+                      </li>
+                    </>
+                  )}
+                </ul>
+
+                <div className="d-flex align-items-center gap-2 flex-wrap">
+                  {/* Quick 12-Page Jump Selector */}
+                  <div className="dropdown">
+                    <button className="btn quick-nav-pill dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                      <i className="bi bi-compass me-1"></i> Quick Jump Page
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-end shadow border-0" style={{ maxHeight: '420px', overflowY: 'auto' }}>
+                      <li className="dropdown-header text-uppercase fw-bold text-muted small">All 12 Portal Pages</li>
+                      {pagesList.map(page => (
+                        <li key={page.id}>
+                          <button 
+                            className={`dropdown-item py-2 d-flex align-items-center gap-2 ${currentPage === page.id ? 'active fw-bold' : ''}`}
+                            onClick={() => {
+                              if (['applicant-dashboard', 'application-form', 'document-upload', 'payment', 'application-status'].includes(page.id)) {
+                                if (!authUser || authUser.role !== 'applicant') {
+                                  setAuthUser({ role: 'applicant', name: 'Arindam Mukherjee', id: 'usr_01' });
+                                }
+                              } else if (['admin-dashboard', 'application-verification'].includes(page.id)) {
+                                if (!authUser || authUser.role !== 'admin') {
+                                  setAuthUser({ role: 'admin', name: 'Admission Officer', id: 'adm_01' });
+                                }
+                              }
+                              setCurrentPage(page.id);
+                            }}
+                          >
+                            <i className={`bi ${page.icon} text-primary`}></i>
+                            <span>{page.label}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {authUser ? (
+                    <div className="d-flex align-items-center gap-2">
+                      <span className={`badge ${authUser.role === 'admin' ? 'bg-danger' : 'bg-success'} py-2 px-3`}>
+                        <i className={`bi ${authUser.role === 'admin' ? 'bi-shield-check' : 'bi-person-check'} me-1`}></i>
+                        {authUser.name}
+                      </span>
+                      <button className="btn btn-outline-light btn-sm" onClick={() => { setAuthUser(null); setCurrentPage('home'); }}>
+                        <i className="bi bi-box-arrow-right"></i> Logout
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      <button className="btn btn-outline-light btn-sm px-3" onClick={() => setCurrentPage('login')}>
+                        <i className="bi bi-box-arrow-in-right me-1"></i> Login
+                      </button>
+                      <button className="btn btn-iem-primary btn-sm px-3" onClick={() => setCurrentPage('register')}>
+                        Apply Now
+                      </button>
+                      <button className="btn btn-dark btn-sm text-warning" onClick={() => setCurrentPage('admin-login')}>
+                        <i className="bi bi-shield-lock me-1"></i> Admin
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </header>
+      );
+    }
+
+    // --- FOOTER ---
+    function Footer({ setCurrentPage, setAuthUser }) {
+      return (
+        <footer className="iem-footer mt-auto no-print">
+          <div className="container">
+            <div className="row g-4">
+              <div className="col-lg-4 col-md-6">
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <div className="iem-logo-badge" style={{ width: '36px', height: '36px', fontSize: '1.1rem' }}>IEM</div>
+                  <h5 className="text-white mb-0 fw-bold">IEM Kolkata</h5>
+                </div>
+                <p className="text-secondary small leading-relaxed">
+                  Institute of Engineering & Management (IEM) Kolkata is the premier private engineering and management college in West Bengal. Accredited with NAAC 'A' Grade and ranked top by NIRF.
+                </p>
+                <div className="d-flex gap-2">
+                  <span className="badge bg-secondary">NAAC 'A'</span>
+                  <span className="badge bg-secondary">NBA Accredited</span>
+                  <span className="badge bg-secondary">AICTE Approved</span>
+                </div>
+              </div>
+
+              <div className="col-lg-4 col-md-6">
+                <h6>Campuses & Contact</h6>
+                <div className="small text-secondary mb-2">
+                  <strong className="text-light">Main Campus (Salt Lake):</strong><br />
+                  Sector V, Salt Lake Electronics Complex, Kolkata - 700091.
+                </div>
+                <div className="small text-secondary">
+                  <i className="bi bi-telephone text-warning me-1"></i> Helpline: +91 33 2357 2995<br />
+                  <i className="bi bi-envelope text-warning me-1"></i> Email: admissions@iemcal.com
+                </div>
+              </div>
+
+              <div className="col-lg-2 col-md-6">
+                <h6>Applicant Quick Links</h6>
+                <ul className="list-unstyled small mb-0 d-flex flex-column gap-2">
+                  <li><button className="btn btn-link p-0 text-secondary text-decoration-none" onClick={() => setCurrentPage('home')}>Home Page</button></li>
+                  <li><button className="btn btn-link p-0 text-secondary text-decoration-none" onClick={() => setCurrentPage('register')}>Register as Applicant</button></li>
+                  <li><button className="btn btn-link p-0 text-secondary text-decoration-none" onClick={() => setCurrentPage('login')}>Applicant Login</button></li>
+                  <li><button className="btn btn-link p-0 text-secondary text-decoration-none" onClick={() => { setAuthUser({ role: 'applicant', name: 'Arindam Mukherjee', id: 'usr_01' }); setCurrentPage('applicant-dashboard'); }}>Dashboard</button></li>
+                  <li><button className="btn btn-link p-0 text-secondary text-decoration-none" onClick={() => { setAuthUser({ role: 'applicant', name: 'Arindam Mukherjee', id: 'usr_01' }); setCurrentPage('application-status'); }}>Track Status</button></li>
+                </ul>
+              </div>
+
+              <div className="col-lg-2 col-md-6">
+                <h6>Admin Directorate</h6>
+                <ul className="list-unstyled small mb-0 d-flex flex-column gap-2">
+                  <li><button className="btn btn-link p-0 text-secondary text-decoration-none" onClick={() => setCurrentPage('admin-login')}>Admin Login</button></li>
+                  <li><button className="btn btn-link p-0 text-warning text-decoration-none" onClick={() => { setAuthUser({ role: 'admin', name: 'Admission Officer', id: 'adm_01' }); setCurrentPage('admin-dashboard'); }}><i className="bi bi-shield-lock me-1"></i> Admin Console</button></li>
+                  <li><button className="btn btn-link p-0 text-warning text-decoration-none" onClick={() => { setAuthUser({ role: 'admin', name: 'Admission Officer', id: 'adm_01' }); setCurrentPage('application-verification'); }}><i className="bi bi-check2-circle me-1"></i> Verification Queue</button></li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="iem-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start">
+              <div>© 2026 Institute of Engineering & Management (IEM), Kolkata. All rights reserved.</div>
+              <div className="mt-2 mt-md-0 text-secondary small">React.js & Bootstrap Frontend Architecture</div>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    // --- PAGE 1: HOME ---
+    function HomePage({ setCurrentPage, setAuthUser }) {
+      return (
+        <div>
+          <section className="iem-hero text-center text-md-start">
+            <div className="container">
+              <div className="row align-items-center g-5">
+                <div className="col-lg-7">
+                  <span className="badge-gold mb-3 d-inline-block">
+                    <i className="bi bi-mortarboard-fill me-1"></i> Admissions 2026 - 2027
+                  </span>
+                  <h1 className="display-5 fw-bold text-white mb-3">
+                    Shape Your Future at <span style={{ color: 'var(--iem-gold)' }}>IEM Kolkata</span>
+                  </h1>
+                  <p className="lead text-light mb-4 opacity-90">
+                    Pioneering quality education in Engineering, Technology & Management since 1989. Ranked top private engineering college in Eastern India with 100% placement record.
+                  </p>
+                  <div className="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+                    <button className="btn btn-iem-primary btn-lg px-4" onClick={() => setCurrentPage('register')}>
+                      <i className="bi bi-pencil-fill me-2"></i> Apply for Admission
+                    </button>
+                    <button className="btn btn-outline-light btn-lg px-4" onClick={() => setCurrentPage('login')}>
+                      <i className="bi bi-box-arrow-in-right me-2"></i> Applicant Login
+                    </button>
+                    <button className="btn btn-dark btn-lg px-4 text-warning border-warning" onClick={() => { setAuthUser({ role: 'admin', name: 'Admission Officer', id: 'adm_01' }); setCurrentPage('admin-dashboard'); }}>
+                      <i className="bi bi-shield-check me-2"></i> Admin Portal
+                    </button>
+                  </div>
+                </div>
+
+                <div className="col-lg-5">
+                  <div className="card border-0 shadow-lg p-4 bg-white rounded-4 text-dark">
+                    <div className="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                      <h5 className="fw-bold mb-0 text-primary">
+                        <i className="bi bi-bell-fill text-warning me-2"></i> Admission Updates
+                      </h5>
+                      <span className="badge bg-danger">LIVE</span>
+                    </div>
+                    <div className="list-group list-group-flush mb-3">
+                      {IMPORTANT_NOTICES.map(n => (
+                        <div key={n.id} className="list-group-item px-0 py-2 border-0 border-bottom">
+                          <div className="d-flex justify-content-between small text-muted mb-1">
+                            <span><i className="bi bi-calendar3 me-1"></i> {n.date}</span>
+                            {n.isNew && <span className="badge bg-success-subtle text-success">NEW</span>}
+                          </div>
+                          <div className="fw-semibold small text-dark">{n.title}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="bg-light p-3 rounded-3 text-center">
+                      <div className="fw-bold text-dark small">WBJEE Code: <span className="text-primary">104</span> | JEE Main Code: <span className="text-primary">IEM-KOL</span></div>
+                      <div className="text-muted small">Admissions through WBJEE, JEE Main & IEMJEE</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Stats */}
+          <section className="py-4 bg-white shadow-sm border-bottom">
+            <div className="container">
+              <div className="row text-center g-4">
+                <div className="col-6 col-md-3">
+                  <div className="display-6 fw-bold text-primary mb-1">35+</div>
+                  <div className="text-muted small text-uppercase fw-semibold">Years of Excellence</div>
+                </div>
+                <div className="col-6 col-md-3">
+                  <div className="display-6 fw-bold text-success mb-1">100%</div>
+                  <div className="text-muted small text-uppercase fw-semibold">Placement Record</div>
+                </div>
+                <div className="col-6 col-md-3">
+                  <div className="display-6 fw-bold text-warning mb-1">₹72 LPA</div>
+                  <div className="text-muted small text-uppercase fw-semibold">Highest CTC Package</div>
+                </div>
+                <div className="col-6 col-md-3">
+                  <div className="display-6 fw-bold text-danger mb-1">NAAC 'A'</div>
+                  <div className="text-muted small text-uppercase fw-semibold">Accreditation</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 5-Step Process */}
+          <section className="py-5" style={{ backgroundColor: '#f8fafc' }}>
+            <div className="container">
+              <div className="text-center mb-5">
+                <span className="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill text-uppercase">Online Portal</span>
+                <h2 className="fw-bold mt-2" style={{ color: 'var(--iem-navy)' }}>Simple 5-Step Admission Journey</h2>
+              </div>
+              <div className="row g-4">
+                {[
+                  { step: '01', title: 'Register Account', desc: 'Create profile with mobile & email verification.', icon: 'bi-person-badge' },
+                  { step: '02', title: 'Fill Application', desc: 'Enter 10th, 12th PCM marks & entrance ranks.', icon: 'bi-ui-checks-grid' },
+                  { step: '03', title: 'Upload Documents', desc: 'Attach photos, marksheets and scorecard.', icon: 'bi-upload' },
+                  { step: '04', title: 'Pay Application Fee', desc: 'Secure ₹1,000 fee payment via UPI or Cards.', icon: 'bi-credit-card-2-front' },
+                  { step: '05', title: 'Verification & Allotment', desc: 'Download provisional allotment letter.', icon: 'bi-patch-check' }
+                ].map(item => (
+                  <div key={item.step} className="col-md-4 col-lg">
+                    <div className="iem-card h-100 p-4 text-center border-top border-4 border-primary">
+                      <div className="display-6 fw-bold text-primary opacity-25 mb-2">{item.step}</div>
+                      <div className="fs-2 text-primary mb-3"><i className={`bi ${item.icon}`}></i></div>
+                      <h6 className="fw-bold mb-2">{item.title}</h6>
+                      <p className="text-muted small mb-0">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Programs */}
+          <section className="py-5 bg-white">
+            <div className="container">
+              <div className="d-flex justify-content-between align-items-end mb-4 flex-wrap">
+                <div>
+                  <span className="badge bg-warning-subtle text-warning-emphasis fw-bold px-3 py-2 rounded-pill text-uppercase">Academic Programs</span>
+                  <h2 className="fw-bold mt-2" style={{ color: 'var(--iem-navy)' }}>Programs Offered for 2026-27</h2>
+                </div>
+                <button className="btn btn-outline-primary" onClick={() => setCurrentPage('register')}>
+                  Apply Online <i className="bi bi-arrow-right ms-1"></i>
+                </button>
+              </div>
+
+              <div className="row g-4">
+                {INITIAL_PROGRAMS.map(prog => (
+                  <div key={prog.id} className="col-md-6 col-lg-4">
+                    <div className="iem-card h-100 p-4 d-flex flex-column justify-content-between">
+                      <div>
+                        <div className="d-flex justify-content-between align-items-start mb-3">
+                          <div className="p-3 rounded-3 bg-primary-subtle text-primary fs-3">
+                            <i className={`bi ${prog.icon}`}></i>
+                          </div>
+                          <span className="badge bg-light text-dark border">{prog.category}</span>
+                        </div>
+                        <h5 className="fw-bold text-dark mb-2">{prog.name}</h5>
+                        <div className="small text-muted mb-2"><i className="bi bi-clock me-1"></i> {prog.duration}</div>
+                        <div className="bg-light p-3 rounded-3 small mb-3">
+                          <strong>Eligibility:</strong> {prog.eligibility}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="d-flex justify-content-between align-items-center mb-3 small">
+                          <span className="text-muted">Intake: <strong>{prog.seats} Seats</strong></span>
+                          <span className="badge bg-success-subtle text-success">{prog.filled} Applied</span>
+                        </div>
+                        <button className="btn btn-iem-primary w-100" onClick={() => setCurrentPage('register')}>
+                          Apply for this Branch
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    // --- PAGE 2: REGISTER ---
+    function RegisterPage({ setCurrentPage, setAuthUser, setApplicantData }) {
+      const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        phone: '',
+        program: 'B.Tech - Computer Science & Engineering',
+        password: '',
+        confirmPassword: '',
+        agreed: false
+      });
+      const [error, setError] = useState('');
+      const [successAppId, setSuccessAppId] = useState('');
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formData.fullName || !formData.email || !formData.phone || !formData.password) {
+          setError('Please fill in all mandatory fields.');
+          return;
+        }
+        if (formData.password !== formData.confirmPassword) {
+          setError('Passwords do not match.');
+          return;
+        }
+        if (!formData.agreed) {
+          setError('Please agree to the admission declaration.');
+          return;
+        }
+
+        // Try calling live backend REST API
+        const apiRes = await apiRequest('/auth/register', 'POST', {
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+          program: formData.program
+        });
+
+        const newId = apiRes?.user?.applicationNumber || ('IEM-2026-' + Math.floor(1000 + Math.random() * 9000));
+        if (apiRes?.token) {
+          localStorage.setItem('iem_token', apiRes.token);
+        }
+
+        setSuccessAppId(newId);
+        setApplicantData(prev => ({
+          ...prev,
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          applicationNumber: newId,
+          preferences: [{ order: 1, course: formData.program }]
+        }));
+      };
+
+      return (
+        <div className="py-5" style={{ backgroundColor: '#f1f5f9', minHeight: '80vh' }}>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-10">
+                <div className="iem-card overflow-hidden">
+                  <div className="row g-0">
+                    <div className="col-md-5 p-5 text-white d-flex flex-column justify-content-between" style={{ background: 'linear-gradient(145deg, #0a2240, #153e70)' }}>
+                      <div>
+                        <div className="iem-logo-badge mb-3">IEM</div>
+                        <h3 className="fw-bold mb-2">Join IEM Kolkata</h3>
+                        <p className="text-light opacity-90 small mb-4">
+                          Create your admission account to start your enrollment for the 2026-27 session.
+                        </p>
+                        <div className="d-flex flex-column gap-3 small">
+                          <div><i className="bi bi-check-circle-fill text-warning me-2"></i> Single application for all programs</div>
+                          <div><i className="bi bi-check-circle-fill text-warning me-2"></i> Online document verification</div>
+                          <div><i className="bi bi-check-circle-fill text-warning me-2"></i> Instant status notifications</div>
+                        </div>
+                      </div>
+                      <div className="pt-4 border-top border-secondary border-opacity-50 small text-light opacity-75">
+                        Admission Helpline: <strong>+91 33 2357 2995</strong>
+                      </div>
+                    </div>
+
+                    <div className="col-md-7 p-4 p-md-5">
+                      <h4 className="fw-bold mb-1" style={{ color: 'var(--iem-navy)' }}>Applicant Registration</h4>
+                      <p className="text-muted small mb-4">Enter candidate credentials</p>
+
+                      {error && <div className="alert alert-danger py-2 small">{error}</div>}
+
+                      {successAppId ? (
+                        <div className="text-center py-4">
+                          <i className="bi bi-check-circle-fill text-success fs-1 mb-2 d-block"></i>
+                          <h4 className="fw-bold text-success">Registration Successful!</h4>
+                          <p className="text-muted small mb-3">Your official Application ID is:</p>
+                          <div className="p-3 bg-light rounded-3 border mb-4 fs-4 fw-bold text-primary">{successAppId}</div>
+                          <button 
+                            className="btn btn-iem-primary w-100 py-2"
+                            onClick={() => {
+                              setAuthUser({ role: 'applicant', name: formData.fullName, id: successAppId });
+                              setCurrentPage('applicant-dashboard');
+                            }}
+                          >
+                            Proceed to Applicant Dashboard <i className="bi bi-arrow-right ms-1"></i>
+                          </button>
+                        </div>
+                      ) : (
+                        <form onSubmit={handleSubmit}>
+                          <div className="mb-3">
+                            <label className="form-label small fw-semibold">Candidate Full Name *</label>
+                            <input type="text" className="form-control" placeholder="e.g. Arindam Mukherjee" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} required />
+                          </div>
+                          <div className="row g-3 mb-3">
+                            <div className="col-md-6">
+                              <label className="form-label small fw-semibold">Email Address *</label>
+                              <input type="email" className="form-control" placeholder="student@example.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} required />
+                            </div>
+                            <div className="col-md-6">
+                              <label className="form-label small fw-semibold">Mobile Number *</label>
+                              <input type="tel" className="form-control" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} required />
+                            </div>
+                          </div>
+                          <div className="mb-3">
+                            <label className="form-label small fw-semibold">Program *</label>
+                            <select className="form-select" value={formData.program} onChange={e => setFormData({ ...formData, program: e.target.value })}>
+                              {INITIAL_PROGRAMS.map(p => <option key={p.id} value={p.name}>{p.name}</option>)}
+                            </select>
+                          </div>
+                          <div className="row g-3 mb-3">
+                            <div className="col-md-6">
+                              <label className="form-label small fw-semibold">Password *</label>
+                              <input type="password" className="form-control" placeholder="Min 6 chars" value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} required />
+                            </div>
+                            <div className="col-md-6">
+                              <label className="form-label small fw-semibold">Confirm Password *</label>
+                              <input type="password" className="form-control" placeholder="Re-enter" value={formData.confirmPassword} onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })} required />
+                            </div>
+                          </div>
+                          <div className="form-check mb-4 small">
+                            <input type="checkbox" className="form-check-input" id="terms" checked={formData.agreed} onChange={e => setFormData({ ...formData, agreed: e.target.checked })} />
+                            <label className="form-check-label text-muted" htmlFor="terms">I agree to the IEM admission guidelines and declare all info is authentic.</label>
+                          </div>
+                          <button type="submit" className="btn btn-iem-primary w-100 py-2 fw-bold mb-3">
+                            Register & Continue <i className="bi bi-arrow-right ms-1"></i>
+                          </button>
+                          <div className="text-center small text-muted">
+                            Already registered? <button type="button" className="btn btn-link p-0 fw-bold text-decoration-none" onClick={() => setCurrentPage('login')}>Applicant Login</button>
+                          </div>
+                        </form>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 3: LOGIN ---
+    function LoginPage({ setCurrentPage, setAuthUser }) {
+      const [identifier, setIdentifier] = useState('');
+      const [password, setPassword] = useState('');
+      const [error, setError] = useState('');
+
+      const handleLogin = async (e) => {
+        e.preventDefault();
+        if (!identifier || !password) {
+          setError('Please provide your credentials.');
+          return;
+        }
+
+        // Try calling live backend REST API
+        const apiRes = await apiRequest('/auth/login', 'POST', { identifier, password });
+        if (apiRes?.token) {
+          localStorage.setItem('iem_token', apiRes.token);
+          setAuthUser({
+            role: apiRes.user.role || 'applicant',
+            name: apiRes.user.fullName || 'Arindam Mukherjee',
+            id: apiRes.user.applicationNumber || 'IEM-2026-8492'
+          });
+        } else {
+          // Fallback to demo credentials
+          setAuthUser({ role: 'applicant', name: 'Arindam Mukherjee', id: 'IEM-2026-8492' });
+        }
+
+        setCurrentPage('applicant-dashboard');
+      };
+
+      const fillDemo = () => {
+        setIdentifier('arindam.mukherjee@example.com');
+        setPassword('iem@2026');
+        setError('');
+      };
+
+      return (
+        <div className="py-5" style={{ backgroundColor: '#f1f5f9', minHeight: '80vh' }}>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-md-7 col-lg-5">
+                <div className="iem-card p-4 p-md-5">
+                  <div className="text-center mb-4">
+                    <div className="iem-logo-badge mx-auto mb-3">IEM</div>
+                    <h4 className="fw-bold mb-1 text-dark">Applicant Login</h4>
+                    <p className="text-muted small">Access your IEM Admission Portal</p>
+                  </div>
+
+                  <div className="alert alert-info py-2 px-3 small d-flex justify-content-between align-items-center mb-3">
+                    <div><i className="bi bi-info-circle-fill me-1"></i> Demo Applicant Available</div>
+                    <button type="button" className="btn btn-sm btn-outline-primary py-0" onClick={fillDemo}>Autofill Demo</button>
+                  </div>
+
+                  {error && <div className="alert alert-danger py-2 small">{error}</div>}
+
+                  <form onSubmit={handleLogin}>
+                    <div className="mb-3">
+                      <label className="form-label small fw-semibold">Email or Application Number</label>
+                      <input type="text" className="form-control" placeholder="IEM-2026-8492 or email" value={identifier} onChange={e => setIdentifier(e.target.value)} required />
+                    </div>
+                    <div className="mb-3">
+                      <div className="d-flex justify-content-between">
+                        <label className="form-label small fw-semibold">Password</label>
+                        <button type="button" className="btn btn-link p-0 small text-decoration-none" onClick={() => setCurrentPage('forgot-password')}>Forgot password?</button>
+                      </div>
+                      <input type="password" className="form-control" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} required />
+                    </div>
+                    <div className="form-check mb-4 small">
+                      <input type="checkbox" className="form-check-input" id="remember" defaultChecked />
+                      <label className="form-check-label text-muted" htmlFor="remember">Keep me logged in</label>
+                    </div>
+                    <button type="submit" className="btn btn-iem-primary w-100 py-2 fw-bold mb-3">
+                      Sign In <i className="bi bi-box-arrow-in-right ms-1"></i>
+                    </button>
+                  </form>
+
+                  <div className="text-center small text-muted border-top pt-3">
+                    Don't have an application account? <button type="button" className="btn btn-link p-0 fw-bold text-decoration-none" onClick={() => setCurrentPage('register')}>Register Here</button>
+                  </div>
+                  <div className="text-center mt-3 pt-3 border-top">
+                    <span className="small text-muted me-2">Admission Staff?</span>
+                    <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => setCurrentPage('admin-login')}>Admin Login</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 4: FORGOT PASSWORD ---
+    function ForgotPasswordPage({ setCurrentPage }) {
+      const [step, setStep] = useState(1);
+      const [email, setEmail] = useState('');
+      const [otp, setOtp] = useState('');
+      const [newPass, setNewPass] = useState('');
+      const [confirmPass, setConfirmPass] = useState('');
+      const [error, setError] = useState('');
+
+      return (
+        <div className="py-5" style={{ backgroundColor: '#f1f5f9', minHeight: '80vh' }}>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-md-7 col-lg-5">
+                <div className="iem-card p-4 p-md-5">
+                  <div className="text-center mb-4">
+                    <div className="p-3 bg-primary-subtle text-primary rounded-circle d-inline-flex mb-3"><i className="bi bi-shield-lock-fill fs-2"></i></div>
+                    <h4 className="fw-bold mb-1 text-dark">Password Recovery</h4>
+                    <p className="text-muted small">Reset your admission account credentials</p>
+                  </div>
+
+                  {error && <div className="alert alert-danger py-2 small">{error}</div>}
+
+                  {step === 1 && (
+                    <form onSubmit={e => { e.preventDefault(); if (!email) return; setError(''); setStep(2); }}>
+                      <div className="mb-3">
+                        <label className="form-label small fw-semibold">Registered Email Address</label>
+                        <input type="email" className="form-control" placeholder="arindam.mukherjee@example.com" value={email} onChange={e => setEmail(e.target.value)} required />
+                      </div>
+                      <button type="submit" className="btn btn-iem-primary w-100 py-2 fw-bold mb-3">Send Reset Code <i className="bi bi-arrow-right ms-1"></i></button>
+                    </form>
+                  )}
+
+                  {step === 2 && (
+                    <form onSubmit={e => { e.preventDefault(); if (otp !== '582914' && otp !== '123456') { setError('Use Demo OTP: 582914'); return; } setError(''); setStep(3); }}>
+                      <div className="alert alert-warning py-2 small mb-3">Demo Code sent to {email}: <strong>582914</strong></div>
+                      <div className="mb-3">
+                        <label className="form-label small fw-semibold">Enter 6-Digit OTP</label>
+                        <input type="text" className="form-control text-center fs-4" maxLength="6" placeholder="582914" value={otp} onChange={e => setOtp(e.target.value)} required />
+                      </div>
+                      <button type="submit" className="btn btn-iem-primary w-100 py-2 fw-bold mb-3">Verify Code</button>
+                    </form>
+                  )}
+
+                  {step === 3 && (
+                    <form onSubmit={e => { e.preventDefault(); if (newPass !== confirmPass) { setError('Passwords do not match'); return; } setError(''); setStep(4); }}>
+                      <div className="mb-3">
+                        <label className="form-label small fw-semibold">New Password</label>
+                        <input type="password" className="form-control" placeholder="Min 6 characters" value={newPass} onChange={e => setNewPass(e.target.value)} required />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label small fw-semibold">Confirm Password</label>
+                        <input type="password" className="form-control" placeholder="Re-enter" value={confirmPass} onChange={e => setConfirmPass(e.target.value)} required />
+                      </div>
+                      <button type="submit" className="btn btn-iem-primary w-100 py-2 fw-bold mb-3">Save New Password</button>
+                    </form>
+                  )}
+
+                  {step === 4 && (
+                    <div className="text-center py-3">
+                      <i className="bi bi-check-circle-fill text-success fs-1 mb-2 d-block"></i>
+                      <h5 className="fw-bold text-success mb-2">Password Successfully Reset!</h5>
+                      <button type="button" className="btn btn-iem-primary w-100 py-2 fw-bold" onClick={() => setCurrentPage('login')}>Go to Login</button>
+                    </div>
+                  )}
+
+                  <div className="text-center small text-muted border-top pt-3 mt-3">
+                    <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => setCurrentPage('login')}>Back to Login</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 5: APPLICANT DASHBOARD ---
+    function ApplicantDashboard({ applicantData, setCurrentPage }) {
+      const getStatusBadge = (status) => {
+        if (status === 'verified') return <span className="badge bg-success px-3 py-2 fs-6"><i className="bi bi-check-circle-fill me-1"></i> Verified</span>;
+        if (status === 'seat_allotted') return <span className="badge bg-primary px-3 py-2 fs-6"><i className="bi bi-award-fill me-1"></i> Seat Allotted</span>;
+        return <span className="badge bg-info text-dark px-3 py-2 fs-6">Submitted</span>;
+      };
+
+      return (
+        <div className="py-4" style={{ backgroundColor: '#f5f8fc', minHeight: '85vh' }}>
+          <div className="container">
+            <div className="iem-card p-4 mb-4 border-0 text-white" style={{ background: 'linear-gradient(135deg, #0a2240, #1b497e)' }}>
+              <div className="row align-items-center g-3">
+                <div className="col-lg-8">
+                  <span className="badge bg-warning text-dark fw-bold mb-2">Academic Session 2026-27</span>
+                  <h2 className="fw-bold mb-1">Welcome, {applicantData.fullName}!</h2>
+                  <div className="d-flex flex-wrap gap-3 small opacity-90">
+                    <span><i className="bi bi-hash"></i> App No: <strong>{applicantData.applicationNumber}</strong></span>
+                    <span><i className="bi bi-envelope"></i> {applicantData.email}</span>
+                    <span><i className="bi bi-telephone"></i> {applicantData.phone}</span>
+                  </div>
+                </div>
+                <div className="col-lg-4 text-lg-end">
+                  {getStatusBadge(applicantData.status)}
+                </div>
+              </div>
+            </div>
+
+            {/* Stepper */}
+            <div className="iem-card p-4 mb-4">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="fw-bold mb-0 text-dark"><i className="bi bi-list-check text-primary me-2"></i> Application Completion</h5>
+                <span className="fw-bold text-primary">100% Completed</span>
+              </div>
+              <div className="progress mb-4" style={{ height: '10px' }}>
+                <div className="progress-bar bg-success progress-bar-striped" style={{ width: '100%' }}></div>
+              </div>
+
+              <div className="stepper-wrapper mb-0">
+                <div className="stepper-item completed" onClick={() => setCurrentPage('register')}>
+                  <div className="step-counter"><i className="bi bi-check-lg"></i></div>
+                  <div className="step-name">1. Registration</div>
+                </div>
+                <div className="stepper-item completed" onClick={() => setCurrentPage('application-form')}>
+                  <div className="step-counter"><i className="bi bi-check-lg"></i></div>
+                  <div className="step-name">2. Application Form</div>
+                </div>
+                <div className="stepper-item completed" onClick={() => setCurrentPage('document-upload')}>
+                  <div className="step-counter"><i className="bi bi-check-lg"></i></div>
+                  <div className="step-name">3. Documents</div>
+                </div>
+                <div className="stepper-item completed" onClick={() => setCurrentPage('payment')}>
+                  <div className="step-counter"><i className="bi bi-check-lg"></i></div>
+                  <div className="step-name">4. Fee Payment</div>
+                </div>
+                <div className="stepper-item completed" onClick={() => setCurrentPage('application-status')}>
+                  <div className="step-counter"><i className="bi bi-check-lg"></i></div>
+                  <div className="step-name">5. Verification</div>
+                </div>
+              </div>
+            </div>
+
+            {/* 4 Cards */}
+            <div className="row g-4 mb-4">
+              <div className="col-md-6 col-lg-3">
+                <div className="iem-card p-3 h-100 d-flex flex-column justify-content-between">
+                  <div>
+                    <div className="d-flex justify-content-between mb-2"><span className="text-muted small">Course Choice</span><i className="bi bi-file-earmark-text text-primary fs-4"></i></div>
+                    <h6 className="fw-bold text-dark">{applicantData.preferences?.[0]?.course}</h6>
+                    <div className="text-muted small mb-3">PCM: <strong>{applicantData.academics?.class12?.pcmPercentage}%</strong> | Rank: <strong>{applicantData.academics?.entranceExam?.rank}</strong></div>
+                  </div>
+                  <button className="btn btn-outline-primary btn-sm w-100" onClick={() => setCurrentPage('application-form')}><i className="bi bi-pencil-square me-1"></i> Edit Form</button>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="iem-card p-3 h-100 d-flex flex-column justify-content-between">
+                  <div>
+                    <div className="d-flex justify-content-between mb-2"><span className="text-muted small">Documents</span><i className="bi bi-file-earmark-check text-success fs-4"></i></div>
+                    <h6 className="fw-bold text-dark">5 Files Attached</h6>
+                    <div className="text-success small mb-3"><i className="bi bi-shield-check me-1"></i> Verified by Committee</div>
+                  </div>
+                  <button className="btn btn-outline-secondary btn-sm w-100" onClick={() => setCurrentPage('document-upload')}><i className="bi bi-eye me-1"></i> View Documents</button>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="iem-card p-3 h-100 d-flex flex-column justify-content-between">
+                  <div>
+                    <div className="d-flex justify-content-between mb-2"><span className="text-muted small">Fee Payment</span><i className="bi bi-credit-card-2-back text-warning fs-4"></i></div>
+                    <h6 className="fw-bold text-dark">₹1,000 Paid</h6>
+                    <div className="text-muted small font-monospace mb-3">{applicantData.payment?.transactionId}</div>
+                  </div>
+                  <button className="btn btn-outline-success btn-sm w-100" onClick={() => setCurrentPage('payment')}><i className="bi bi-receipt me-1"></i> Fee Receipt</button>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="iem-card p-3 h-100 d-flex flex-column justify-content-between border-start border-4 border-success">
+                  <div>
+                    <div className="d-flex justify-content-between mb-2"><span className="text-muted small">Allotment</span><i className="bi bi-award text-success fs-4"></i></div>
+                    <h6 className="fw-bold text-success">Seat Allotted</h6>
+                    <div className="text-muted small mb-3">{applicantData.allottedBranch}</div>
+                  </div>
+                  <button className="btn btn-iem-primary btn-sm w-100" onClick={() => setCurrentPage('application-status')}><i className="bi bi-download me-1"></i> Download Letter</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Remarks Alert */}
+            <div className="iem-card p-4">
+              <h5 className="fw-bold text-dark mb-3"><i className="bi bi-chat-left-quote text-primary me-2"></i> Official Committee Notice</h5>
+              <div className="alert alert-success d-flex align-items-start gap-3 mb-0">
+                <i className="bi bi-check-circle-fill fs-4 text-success mt-1"></i>
+                <div>
+                  <div className="fw-bold">Status: Document Verification Cleared</div>
+                  <div className="small text-muted mt-1">{applicantData.adminRemarks}</div>
+                  <div className="small text-dark mt-2"><strong>Provisional Seat:</strong> {applicantData.allottedBranch} (General Merit Quota)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 6: APPLICATION FORM ---
+    function ApplicationFormPage({ applicantData, setApplicantData, setCurrentPage }) {
+      const [activeTab, setActiveTab] = useState('personal');
+      const [toast, setToast] = useState('');
+
+      const [formData, setFormData] = useState({
+        fullName: applicantData.fullName || '',
+        gender: applicantData.gender || 'Male',
+        dob: applicantData.dob || '',
+        category: applicantData.category || 'General',
+        bloodGroup: applicantData.bloodGroup || 'O+',
+        guardianName: applicantData.guardianName || '',
+        guardianPhone: applicantData.guardianPhone || '',
+        address: applicantData.address || '',
+        city: applicantData.city || '',
+        state: applicantData.state || 'West Bengal',
+        pincode: applicantData.pincode || '',
+        class10School: applicantData.academics?.class10?.school || '',
+        class10Percentage: applicantData.academics?.class10?.percentage || '',
+        class12School: applicantData.academics?.class12?.school || '',
+        physicsMarks: applicantData.academics?.class12?.physics || '92',
+        chemistryMarks: applicantData.academics?.class12?.chemistry || '89',
+        mathsMarks: applicantData.academics?.class12?.maths || '95',
+        examType: applicantData.academics?.entranceExam?.examType || 'WBJEE',
+        rollNumber: applicantData.academics?.entranceExam?.rollNumber || '',
+        rank: applicantData.academics?.entranceExam?.rank || '',
+        pref1: applicantData.preferences?.[0]?.course || 'B.Tech - Computer Science & Engineering',
+        pref2: applicantData.preferences?.[1]?.course || 'B.Tech - CSE (AI & Machine Learning)'
+      });
+
+      const pcmAvg = ((parseFloat(formData.physicsMarks || 0) + parseFloat(formData.chemistryMarks || 0) + parseFloat(formData.mathsMarks || 0)) / 3).toFixed(1);
+
+      const save = () => {
+        setApplicantData(prev => ({
+          ...prev,
+          fullName: formData.fullName,
+          gender: formData.gender,
+          dob: formData.dob,
+          category: formData.category,
+          guardianName: formData.guardianName,
+          guardianPhone: formData.guardianPhone,
+          address: formData.address,
+          academics: {
+            ...prev.academics,
+            class12: { ...prev.academics.class12, physics: formData.physicsMarks, chemistry: formData.chemistryMarks, maths: formData.mathsMarks, pcmPercentage: pcmAvg },
+            entranceExam: { ...prev.academics.entranceExam, examType: formData.examType, rollNumber: formData.rollNumber, rank: formData.rank }
+          },
+          preferences: [{ order: 1, course: formData.pref1 }, { order: 2, course: formData.pref2 }]
+        }));
+        setToast('Application form details saved successfully!');
+        setTimeout(() => setToast(''), 3000);
+      };
+
+      return (
+        <div className="py-4" style={{ backgroundColor: '#f5f8fc', minHeight: '85vh' }}>
+          <div className="container">
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <div>
+                <span className="badge bg-primary px-2 py-1 mb-1">Step 2 of 5</span>
+                <h3 className="fw-bold mb-0 text-dark">Admission Application Form</h3>
+                <p className="text-muted small mb-0">App No: <strong className="text-primary">{applicantData.applicationNumber}</strong></p>
+              </div>
+              <div className="d-flex gap-2">
+                <button className="btn btn-outline-secondary btn-sm" onClick={() => setCurrentPage('applicant-dashboard')}>Back</button>
+                <button className="btn btn-outline-primary btn-sm" onClick={save}><i className="bi bi-save me-1"></i> Save Draft</button>
+              </div>
+            </div>
+
+            {toast && <div className="alert alert-success py-2">{toast}</div>}
+
+            <div className="iem-card mb-4">
+              <ul className="nav nav-pills nav-fill p-2 bg-light rounded-top">
+                {['personal', 'academics', 'entrance', 'preferences'].map((tab, idx) => (
+                  <li key={tab} className="nav-item">
+                    <button className={`nav-link fw-semibold text-capitalize ${activeTab === tab ? 'active bg-primary' : 'text-muted'}`} onClick={() => setActiveTab(tab)}>
+                      {idx + 1}. {tab}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="p-4">
+                {activeTab === 'personal' && (
+                  <div>
+                    <h5 className="fw-bold text-dark border-bottom pb-2 mb-3">Personal & Guardian Details</h5>
+                    <div className="row g-3 mb-3">
+                      <div className="col-md-6">
+                        <label className="form-label small fw-semibold">Full Name *</label>
+                        <input type="text" className="form-control" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+                      </div>
+                      <div className="col-md-3">
+                        <label className="form-label small fw-semibold">Date of Birth</label>
+                        <input type="date" className="form-control" value={formData.dob} onChange={e => setFormData({ ...formData, dob: e.target.value })} />
+                      </div>
+                      <div className="col-md-3">
+                        <label className="form-label small fw-semibold">Gender</label>
+                        <select className="form-select" value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value })}><option>Male</option><option>Female</option></select>
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Category</label>
+                        <select className="form-select" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}><option>General</option><option>SC</option><option>ST</option><option>OBC-A</option><option>OBC-B</option></select>
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Guardian Name</label>
+                        <input type="text" className="form-control" value={formData.guardianName} onChange={e => setFormData({ ...formData, guardianName: e.target.value })} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Guardian Phone</label>
+                        <input type="tel" className="form-control" value={formData.guardianPhone} onChange={e => setFormData({ ...formData, guardianPhone: e.target.value })} />
+                      </div>
+                      <div className="col-12">
+                        <label className="form-label small fw-semibold">Permanent Address</label>
+                        <input type="text" className="form-control" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} />
+                      </div>
+                    </div>
+                    <div className="text-end">
+                      <button className="btn btn-iem-primary px-4" onClick={() => setActiveTab('academics')}>Next: Academics <i className="bi bi-arrow-right"></i></button>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'academics' && (
+                  <div>
+                    <h5 className="fw-bold text-dark border-bottom pb-2 mb-3">10+2 Science Marks & PCM Calculation</h5>
+                    <div className="row g-3 mb-4">
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Physics (%)</label>
+                        <input type="number" className="form-control" value={formData.physicsMarks} onChange={e => setFormData({ ...formData, physicsMarks: e.target.value })} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Chemistry (%)</label>
+                        <input type="number" className="form-control" value={formData.chemistryMarks} onChange={e => setFormData({ ...formData, chemistryMarks: e.target.value })} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Mathematics (%)</label>
+                        <input type="number" className="form-control" value={formData.mathsMarks} onChange={e => setFormData({ ...formData, mathsMarks: e.target.value })} />
+                      </div>
+                    </div>
+
+                    <div className="p-3 bg-light rounded border text-center mb-4">
+                      <span className="text-muted small">Auto-Calculated PCM Aggregate:</span>
+                      <div className="fs-3 fw-bold text-success">{pcmAvg}%</div>
+                      <div className="small text-muted">{pcmAvg >= 60 ? '✓ Meets B.Tech 60% requirement' : '⚠ Below 60% requirement'}</div>
+                    </div>
+
+                    <div className="d-flex justify-content-between">
+                      <button className="btn btn-outline-secondary" onClick={() => setActiveTab('personal')}>Previous</button>
+                      <button className="btn btn-iem-primary" onClick={() => setActiveTab('entrance')}>Next: Entrance Exam <i className="bi bi-arrow-right"></i></button>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'entrance' && (
+                  <div>
+                    <h5 className="fw-bold text-dark border-bottom pb-2 mb-3">Entrance Examination Rank</h5>
+                    <div className="row g-3 mb-4">
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Exam Type</label>
+                        <select className="form-select" value={formData.examType} onChange={e => setFormData({ ...formData, examType: e.target.value })}><option>WBJEE</option><option>JEE Main</option><option>IEMJEE</option></select>
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">Roll Number</label>
+                        <input type="text" className="form-control" value={formData.rollNumber} onChange={e => setFormData({ ...formData, rollNumber: e.target.value })} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label small fw-semibold">General Merit Rank (GMR)</label>
+                        <input type="text" className="form-control" value={formData.rank} onChange={e => setFormData({ ...formData, rank: e.target.value })} />
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <button className="btn btn-outline-secondary" onClick={() => setActiveTab('academics')}>Previous</button>
+                      <button className="btn btn-iem-primary" onClick={() => setActiveTab('preferences')}>Next: Preferences <i className="bi bi-arrow-right"></i></button>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'preferences' && (
+                  <div>
+                    <h5 className="fw-bold text-dark border-bottom pb-2 mb-3">Branch Preferences</h5>
+                    <div className="mb-3">
+                      <label className="form-label small fw-semibold">1st Priority Choice</label>
+                      <select className="form-select form-select-lg" value={formData.pref1} onChange={e => setFormData({ ...formData, pref1: e.target.value })}>
+                        {INITIAL_PROGRAMS.map(p => <option key={p.id} value={p.name}>{p.name}</option>)}
+                      </select>
+                    </div>
+                    <div className="mb-4">
+                      <label className="form-label small fw-semibold">2nd Priority Choice</label>
+                      <select className="form-select" value={formData.pref2} onChange={e => setFormData({ ...formData, pref2: e.target.value })}>
+                        {INITIAL_PROGRAMS.map(p => <option key={p.id} value={p.name}>{p.name}</option>)}
+                      </select>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <button className="btn btn-outline-secondary" onClick={() => setActiveTab('entrance')}>Previous</button>
+                      <button className="btn btn-iem-primary fw-bold" onClick={() => { save(); setCurrentPage('document-upload'); }}>Save & Proceed to Documents <i className="bi bi-arrow-right"></i></button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 7: DOCUMENT UPLOAD ---
+    function DocumentUploadPage({ applicantData, setApplicantData, setCurrentPage }) {
+      const [docs, setDocs] = useState(applicantData.documents || {});
+      const [modalDoc, setModalDoc] = useState(null);
+
+      const handleUpload = (key) => {
+        const updated = { ...docs, [key]: { uploaded: true, filename: `${key}_doc.pdf`, status: 'verified', size: '1.2 MB' } };
+        setDocs(updated);
+        setApplicantData(prev => ({ ...prev, documents: updated }));
+      };
+
+      const docItems = [
+        { key: 'photo', name: 'Passport Size Photograph', req: 'Mandatory', icon: 'bi-person-bounding-box' },
+        { key: 'signature', name: 'Candidate Signature', req: 'Mandatory', icon: 'bi-pen' },
+        { key: 'class10Marksheet', name: 'Class 10th Marksheet', req: 'Mandatory', icon: 'bi-file-earmark-pdf' },
+        { key: 'class12Marksheet', name: 'Class 12th Marksheet', req: 'Mandatory', icon: 'bi-file-earmark-text' },
+        { key: 'rankCard', name: 'Entrance Rank Card (WBJEE/JEE)', req: 'Mandatory', icon: 'bi-trophy' }
+      ];
+
+      return (
+        <div className="py-4" style={{ backgroundColor: '#f5f8fc', minHeight: '85vh' }}>
+          <div className="container">
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <div>
+                <span className="badge bg-primary px-2 py-1 mb-1">Step 3 of 5</span>
+                <h3 className="fw-bold mb-0 text-dark">Document Upload Portal</h3>
+                <p className="text-muted small mb-0">Upload scanned credentials for admission verification</p>
+              </div>
+              <button className="btn btn-iem-primary btn-sm" onClick={() => setCurrentPage('payment')}>Proceed to Payment <i className="bi bi-arrow-right"></i></button>
+            </div>
+
+            <div className="row g-4 mb-4">
+              {docItems.map(item => {
+                const doc = docs[item.key] || { uploaded: false };
+                return (
+                  <div key={item.key} className="col-md-6">
+                    <div className="iem-card p-4 h-100">
+                      <div className="d-flex justify-content-between align-items-start mb-3">
+                        <div className="d-flex align-items-center gap-3">
+                          <div className="p-3 bg-primary-subtle text-primary rounded-3 fs-3"><i className={`bi ${item.icon}`}></i></div>
+                          <div>
+                            <h6 className="fw-bold text-dark mb-0">{item.name}</h6>
+                            <span className="badge bg-danger-subtle text-danger small">{item.req}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {doc.uploaded ? (
+                        <div className="bg-light p-3 rounded border">
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div><i className="bi bi-check-circle-fill text-success me-1"></i> <strong>{doc.filename}</strong></div>
+                            <span className="badge bg-success">Verified</span>
+                          </div>
+                          <div className="d-flex gap-2 mt-3 pt-2 border-top">
+                            <button className="btn btn-sm btn-outline-primary" onClick={() => setModalDoc(item)}>Preview</button>
+                            <button className="btn btn-sm btn-outline-secondary" onClick={() => handleUpload(item.key)}>Replace</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="upload-dropzone" onClick={() => handleUpload(item.key)}>
+                          <i className="bi bi-cloud-arrow-up fs-2 text-primary d-block mb-1"></i>
+                          <span className="fw-semibold text-primary small d-block">Click to Upload Document</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="d-flex justify-content-between">
+              <button className="btn btn-outline-secondary" onClick={() => setCurrentPage('application-form')}>Back to Form</button>
+              <button className="btn btn-iem-primary fw-bold px-4" onClick={() => setCurrentPage('payment')}>Continue to Fee Payment <i className="bi bi-arrow-right"></i></button>
+            </div>
+
+            {modalDoc && (
+              <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}>
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content">
+                    <div className="modal-header bg-dark text-white">
+                      <h6 className="modal-title">{modalDoc.name}</h6>
+                      <button className="btn-close btn-close-white" onClick={() => setModalDoc(null)}></button>
+                    </div>
+                    <div className="modal-body text-center p-4">
+                      <i className="bi bi-file-earmark-check text-success display-2 mb-2 d-block"></i>
+                      <h6>Verified Digital Document</h6>
+                      <p className="text-muted small">Official certificate on record.</p>
+                    </div>
+                    <div className="modal-footer"><button className="btn btn-secondary btn-sm" onClick={() => setModalDoc(null)}>Close</button></div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 8: PAYMENT ---
+    function PaymentPage({ applicantData, setApplicantData, setCurrentPage }) {
+      const [processing, setProcessing] = useState(false);
+      const isPaid = applicantData.payment?.status === 'completed';
+
+      const handlePay = () => {
+        setProcessing(true);
+        setTimeout(() => {
+          const txn = 'TXN-IEM-' + Math.floor(10000000 + Math.random() * 90000000);
+          setApplicantData(prev => ({
+            ...prev,
+            payment: {
+              status: 'completed',
+              amount: 1000,
+              transactionId: txn,
+              paymentDate: new Date().toLocaleDateString('en-IN') + ' 14:00 IST',
+              paymentMethod: 'UPI'
+            }
+          }));
+          setProcessing(false);
+        }, 1000);
+      };
+
+      return (
+        <div className="py-4" style={{ backgroundColor: '#f5f8fc', minHeight: '85vh' }}>
+          <div className="container">
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <div>
+                <span className="badge bg-primary px-2 py-1 mb-1">Step 4 of 5</span>
+                <h3 className="fw-bold mb-0 text-dark">Application Fee Payment</h3>
+              </div>
+              <button className="btn btn-iem-primary btn-sm" onClick={() => setCurrentPage('application-status')}>View Status & Letter <i className="bi bi-arrow-right"></i></button>
+            </div>
+
+            <div className="row g-4">
+              <div className="col-lg-7">
+                {isPaid ? (
+                  <div className="iem-card p-5 text-center">
+                    <i className="bi bi-check-circle-fill text-success display-4 mb-3 d-block"></i>
+                    <h4 className="fw-bold text-success">Application Fee Paid!</h4>
+                    <p className="text-muted small mb-4">Payment acknowledged by IEM Directorate.</p>
+                    <div className="p-3 bg-light rounded border text-start mb-4">
+                      <div className="small mb-1"><strong>Txn ID:</strong> <span className="font-monospace text-primary">{applicantData.payment?.transactionId}</span></div>
+                      <div className="small mb-1"><strong>Amount:</strong> ₹1,000.00</div>
+                      <div className="small"><strong>Date:</strong> {applicantData.payment?.paymentDate}</div>
+                    </div>
+                    <button className="btn btn-iem-primary px-4" onClick={() => setCurrentPage('application-status')}>View Application Status & Letter</button>
+                  </div>
+                ) : (
+                  <div className="iem-card p-4">
+                    <h5 className="fw-bold text-dark mb-3">Pay via UPI / QR Code</h5>
+                    <div className="text-center p-3 bg-light rounded border mb-4">
+                      <div className="p-3 bg-white d-inline-block rounded shadow-sm border mb-2">
+                        <i className="bi bi-qr-code text-primary display-1"></i>
+                      </div>
+                      <div className="fw-bold">Scan to Pay ₹1,000</div>
+                      <div className="small text-muted">UPI ID: iemadmissions@sbi</div>
+                    </div>
+                    <button className="btn btn-iem-primary w-100 py-3 fw-bold fs-5" onClick={handlePay} disabled={processing}>
+                      {processing ? 'Processing...' : 'Simulate Pay ₹1,000'}
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <div className="col-lg-5">
+                <div className="iem-card p-4">
+                  <h5 className="fw-bold text-dark border-bottom pb-2 mb-3">Fee Invoice</h5>
+                  <div className="d-flex justify-content-between small mb-2"><span>Application Processing Fee</span><strong>₹1,000.00</strong></div>
+                  <div className="d-flex justify-content-between small mb-2"><span>Information Brochure</span><span className="text-success fw-bold">FREE</span></div>
+                  <div className="d-flex justify-content-between small mb-3"><span>Gateway Charges</span><span className="text-success fw-bold">WAIVED</span></div>
+                  <div className="border-top pt-3 d-flex justify-content-between align-items-center">
+                    <span className="fw-bold fs-5">Total Payable:</span>
+                    <span className="fw-bold fs-4 text-primary">₹1,000.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 9: APPLICATION STATUS & RECEIPT ---
+    function ApplicationStatusPage({ applicantData, setApplicantData, setCurrentPage }) {
+      const [submitting, setSubmitting] = useState(false);
+      const [msg, setMsg] = useState('');
+      const status = applicantData.status || 'draft';
+      const isDraft = status === 'draft';
+      const isFeePaid = applicantData.payment?.status === 'completed';
+
+      const handleFinalSubmit = async () => {
+        if (!isFeePaid) {
+          setMsg('Please pay the ₹1,000 application fee before submitting.');
+          return;
+        }
+        setSubmitting(true);
+        const apiRes = await apiRequest('/application/submit', 'POST');
+        setApplicantData(prev => ({
+          ...prev,
+          status: 'submitted',
+          submittedAt: apiRes?.application?.submittedAt || new Date().toISOString()
+        }));
+        setSubmitting(false);
+        setMsg('Application submitted successfully! Your application is now locked and under committee review.');
+      };
+
+      return (
+        <div className="py-4" style={{ backgroundColor: '#f5f8fc', minHeight: '85vh' }}>
+          <div className="container">
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2 no-print">
+              <div>
+                <span className="badge bg-success px-2 py-1 mb-1">Final Step</span>
+                <h3 className="fw-bold mb-0 text-dark">Application Status & Official Letter</h3>
+              </div>
+              <div className="d-flex gap-2">
+                <button className="btn btn-outline-secondary btn-sm" onClick={() => setCurrentPage('applicant-dashboard')}>Dashboard</button>
+                <button className="btn btn-iem-primary btn-sm" onClick={() => window.print()}><i className="bi bi-printer me-1"></i> Print / Save PDF</button>
+              </div>
+            </div>
+
+            {msg && <div className="alert alert-info py-2 no-print mb-4"><i className="bi bi-info-circle me-1"></i> {msg}</div>}
+
+            {isDraft && (
+              <div className="alert alert-warning border-warning shadow-sm p-4 mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3 no-print">
+                <div>
+                  <h6 className="fw-bold text-dark mb-1"><i className="bi bi-pencil-square text-warning me-2"></i> Application Status: In-Progress (Draft)</h6>
+                  <p className="small text-muted mb-0">Confirm and submit your final application to participate in seat counseling.</p>
+                </div>
+                <button className="btn btn-iem-primary fw-bold px-4" onClick={handleFinalSubmit} disabled={submitting}>
+                  {submitting ? 'Submitting...' : 'Confirm & Submit Final Application'}
+                </button>
+              </div>
+            )}
+
+            {/* Printable Letter */}
+            <div className="admission-receipt printable-area">
+              <div className="receipt-watermark">IEM KOLKATA</div>
+              <div className="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                <div className="d-flex align-items-center gap-3">
+                  <div className="iem-logo-badge" style={{ width: '56px', height: '56px', fontSize: '1.6rem' }}>IEM</div>
+                  <div>
+                    <h4 className="fw-bold mb-0 text-dark">INSTITUTE OF ENGINEERING & MANAGEMENT</h4>
+                    <div className="small text-muted">Approved by AICTE, Affiliated to MAKAUT • NAAC 'A' Grade</div>
+                    <div className="small text-muted">Sector V, Salt Lake, Kolkata, West Bengal - 700091</div>
+                  </div>
+                </div>
+                <div className="text-end">
+                  <span className="badge bg-dark px-3 py-2">ADMISSION ACKNOWLEDGMENT 2026-27</span>
+                </div>
+              </div>
+
+              {applicantData.allottedBranch && (
+                <div className="alert alert-success border-success p-3 mb-4">
+                  <h6 className="fw-bold text-success mb-1"><i className="bi bi-check-circle-fill me-2"></i> PROVISIONAL SEAT ALLOTMENT LETTER</h6>
+                  <div className="small text-dark">Provisionally Selected Branch:</div>
+                  <div className="fs-5 fw-bold text-primary">{applicantData.allottedBranch}</div>
+                </div>
+              )}
+
+              <table className="table table-bordered table-sm small mb-4">
+                <tbody>
+                  <tr>
+                    <th className="bg-light w-25">Application No</th>
+                    <td className="fw-bold text-primary">{applicantData.applicationNumber}</td>
+                    <th className="bg-light w-25">Category</th>
+                    <td>{applicantData.category}</td>
+                  </tr>
+                  <tr>
+                    <th className="bg-light">Candidate Name</th>
+                    <td className="fw-bold">{applicantData.fullName}</td>
+                    <th className="bg-light">Gender</th>
+                    <td>{applicantData.gender}</td>
+                  </tr>
+                  <tr>
+                    <th className="bg-light">Entrance Exam</th>
+                    <td>{applicantData.academics?.entranceExam?.examType} (Roll: {applicantData.academics?.entranceExam?.rollNumber})</td>
+                    <th className="bg-light">General Rank</th>
+                    <td className="fw-bold text-success">{applicantData.academics?.entranceExam?.rank}</td>
+                  </tr>
+                  <tr>
+                    <th className="bg-light">Class 12th PCM %</th>
+                    <td className="fw-bold">{applicantData.academics?.class12?.pcmPercentage}%</td>
+                    <th className="bg-light">Status</th>
+                    <td><span className="badge bg-success">VERIFIED & APPROVED</span></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="border p-3 rounded bg-light mb-4">
+                <h6 className="fw-bold text-dark small mb-1">Admission Directorate Remarks:</h6>
+                <p className="small text-muted mb-0">{applicantData.adminRemarks}</p>
+              </div>
+
+              <div className="d-flex justify-content-between align-items-end pt-4 border-top">
+                <div className="text-center small">
+                  <div>Candidate Signature</div>
+                  <div className="text-muted">Date: {new Date().toLocaleDateString('en-GB')}</div>
+                </div>
+                <div className="text-center small">
+                  <div className="badge bg-secondary mb-1">DIGITALLY STAMPED</div>
+                  <div className="fw-bold text-dark">Prof. Dr. S. Banerjee</div>
+                  <div className="text-muted">Convener, IEM Admission Committee</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 10: ADMIN LOGIN ---
+    function AdminLoginPage({ setCurrentPage, setAuthUser }) {
+      const [email, setEmail] = useState('');
+      const [pass, setPass] = useState('');
+
+      const handleLogin = async (e) => {
+        e.preventDefault();
+
+        // Try calling live backend REST API
+        const apiRes = await apiRequest('/auth/admin-login', 'POST', { email, password: pass });
+        if (apiRes?.token) {
+          localStorage.setItem('iem_token', apiRes.token);
+          setAuthUser({
+            role: 'admin',
+            name: apiRes.user.fullName || 'Prof. S. Banerjee',
+            id: apiRes.user.id || 'ADM-01'
+          });
+        } else {
+          setAuthUser({ role: 'admin', name: 'Prof. S. Banerjee', id: 'ADM-01' });
+        }
+
+        setCurrentPage('admin-dashboard');
+      };
+
+      const fillAdmin = () => {
+        setEmail('admin.admissions@iemcal.com');
+        setPass('admin@iem2026');
+      };
+
+      return (
+        <div className="py-5" style={{ backgroundColor: '#07182c', minHeight: '85vh' }}>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-md-7 col-lg-5">
+                <div className="iem-card p-4 p-md-5 text-dark bg-white">
+                  <div className="text-center mb-4">
+                    <div className="p-3 bg-danger-subtle text-danger rounded-circle d-inline-flex mb-3"><i className="bi bi-shield-lock-fill fs-1"></i></div>
+                    <h4 className="fw-bold mb-1 text-dark">IEM Admission Committee</h4>
+                    <p className="text-muted small">Central Administrative Portal</p>
+                  </div>
+
+                  <div className="alert alert-warning py-2 small d-flex justify-content-between align-items-center mb-3">
+                    <span>Admin Demo Credentials</span>
+                    <button type="button" className="btn btn-sm btn-dark text-warning py-0" onClick={fillAdmin}>Autofill</button>
+                  </div>
+
+                  <form onSubmit={handleLogin}>
+                    <div className="mb-3">
+                      <label className="form-label small fw-semibold">Officer Email</label>
+                      <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} required />
+                    </div>
+                    <div className="mb-4">
+                      <label className="form-label small fw-semibold">Master Password</label>
+                      <input type="password" className="form-control" value={pass} onChange={e => setPass(e.target.value)} required />
+                    </div>
+                    <button type="submit" className="btn btn-danger w-100 py-2 fw-bold mb-3">Access Admin Console</button>
+                  </form>
+                  <div className="text-center small text-muted border-top pt-3">
+                    <button type="button" className="btn btn-link p-0 text-decoration-none" onClick={() => setCurrentPage('login')}>Applicant Login</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 11: ADMIN DASHBOARD ---
+    function AdminDashboardPage({ applicantsList, setSelectedApplicantId, setCurrentPage }) {
+      const [search, setSearch] = useState('');
+
+      const filtered = applicantsList.filter(a => a.fullName.toLowerCase().includes(search.toLowerCase()) || a.applicationNumber.toLowerCase().includes(search.toLowerCase()));
+
+      return (
+        <div className="py-4" style={{ backgroundColor: '#f1f5f9', minHeight: '85vh' }}>
+          <div className="container-fluid px-lg-5">
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <div>
+                <h3 className="fw-bold mb-0 text-dark"><i className="bi bi-kanban text-primary me-2"></i> IEM Central Admission Directorate</h3>
+                <p className="text-muted small mb-0">Overview of student applications & seat allotment</p>
+              </div>
+            </div>
+
+            {/* Metrics */}
+            <div className="row g-3 mb-4">
+              <div className="col-6 col-lg"><div className="iem-card p-3 border-start border-4 border-primary"><div className="text-muted small">Total Applicants</div><div className="fs-3 fw-bold text-dark">1,248</div></div></div>
+              <div className="col-6 col-lg"><div className="iem-card p-3 border-start border-4 border-warning"><div className="text-muted small">Under Review</div><div className="fs-3 fw-bold text-warning">184</div></div></div>
+              <div className="col-6 col-lg"><div className="iem-card p-3 border-start border-4 border-success"><div className="text-muted small">Verified</div><div className="fs-3 fw-bold text-success">892</div></div></div>
+              <div className="col-6 col-lg"><div className="iem-card p-3 border-start border-4 border-info"><div className="text-muted small">Seats Allotted</div><div className="fs-3 fw-bold text-info">420</div></div></div>
+              <div className="col-6 col-lg"><div className="iem-card p-3 border-start border-4 border-secondary"><div className="text-muted small">Fees Collected</div><div className="fs-3 fw-bold text-dark">₹12.48 L</div></div></div>
+            </div>
+
+            {/* Table */}
+            <div className="iem-card overflow-hidden">
+              <div className="p-3 bg-white border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h6 className="fw-bold text-dark mb-0">Registered Candidates ({filtered.length})</h6>
+                <input type="text" className="form-control form-control-sm" style={{ width: '250px' }} placeholder="Search name or ID..." value={search} onChange={e => setSearch(e.target.value)} />
+              </div>
+              <div className="table-responsive">
+                <table className="table table-hover align-middle mb-0 small">
+                  <thead className="table-light">
+                    <tr>
+                      <th>App No</th>
+                      <th>Candidate Name</th>
+                      <th>PCM %</th>
+                      <th>Entrance Rank</th>
+                      <th>1st Choice</th>
+                      <th>Status</th>
+                      <th className="text-end">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filtered.map(app => (
+                      <tr key={app.id}>
+                        <td className="fw-bold text-primary font-monospace">{app.applicationNumber}</td>
+                        <td><div className="fw-semibold text-dark">{app.fullName}</div><div className="text-muted small">{app.category}</div></td>
+                        <td>{app.academics?.class12?.pcmPercentage || '-'}%</td>
+                        <td><span className="badge bg-light text-dark border me-1">{app.academics?.entranceExam?.examType}</span> #{app.academics?.entranceExam?.rank}</td>
+                        <td>{app.preferences?.[0]?.course}</td>
+                        <td><span className="badge bg-success-subtle text-success">{app.status}</span></td>
+                        <td className="text-end">
+                          <button className="btn btn-sm btn-outline-primary py-1 px-3" onClick={() => { setSelectedApplicantId(app.id); setCurrentPage('application-verification'); }}>
+                            <i className="bi bi-pencil-square me-1"></i> Review
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PAGE 12: APPLICATION VERIFICATION ---
+    function ApplicationVerificationPage({ selectedApplicantId, applicantsList, setApplicantsList, setCurrentPage }) {
+      const applicant = applicantsList.find(a => a.id === selectedApplicantId) || applicantsList[0];
+      const [status, setStatus] = useState(applicant.status || 'under_review');
+      const [branch, setBranch] = useState(applicant.allottedBranch || applicant.preferences?.[0]?.course || 'B.Tech - Computer Science & Engineering');
+      const [remarks, setRemarks] = useState(applicant.adminRemarks || '');
+      const [toast, setToast] = useState('');
+
+      const handleSave = () => {
+        const updated = applicantsList.map(a => a.id === applicant.id ? { ...a, status, allottedBranch: branch, adminRemarks: remarks } : a);
+        setApplicantsList(updated);
+        setToast(`Decision saved! Status updated to "${status}".`);
+        setTimeout(() => setToast(''), 3000);
+      };
+
+      return (
+        <div className="py-4" style={{ backgroundColor: '#f1f5f9', minHeight: '85vh' }}>
+          <div className="container-fluid px-lg-5">
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <div>
+                <span className="badge bg-danger px-2 py-1 mb-1">Administrative Scrutiny</span>
+                <h3 className="fw-bold mb-0 text-dark">Verification: <span className="text-primary">{applicant.fullName}</span></h3>
+              </div>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => setCurrentPage('admin-dashboard')}>Back to Dashboard</button>
+            </div>
+
+            {toast && <div className="alert alert-success py-2">{toast}</div>}
+
+            <div className="row g-4">
+              <div className="col-lg-7">
+                <div className="iem-card p-4 mb-4">
+                  <h5 className="fw-bold text-dark border-bottom pb-2 mb-3">Academic & Entrance Record</h5>
+                  <div className="p-3 bg-light rounded border mb-3">
+                    <div className="d-flex justify-content-between mb-1">
+                      <span className="badge bg-primary fs-6">{applicant.academics?.entranceExam?.examType}</span>
+                      <span className="fw-bold text-success fs-5">Rank: #{applicant.academics?.entranceExam?.rank}</span>
+                    </div>
+                    <div className="small text-muted">Roll: {applicant.academics?.entranceExam?.rollNumber}</div>
+                  </div>
+
+                  <div className="p-3 bg-light rounded border mb-3">
+                    <div className="fw-bold text-dark small mb-1">Class 12th PCM Aggregate:</div>
+                    <div className="fs-4 fw-bold text-success">{applicant.academics?.class12?.pcmPercentage}%</div>
+                  </div>
+
+                  <h6 className="fw-bold text-dark small mb-2">Branch Choice:</h6>
+                  <div className="p-2 border rounded bg-white small">{applicant.preferences?.[0]?.course}</div>
+                </div>
+              </div>
+
+              <div className="col-lg-5">
+                <div className="iem-card p-4 border-top border-4 border-danger">
+                  <h5 className="fw-bold text-dark border-bottom pb-2 mb-3">Officer Decision</h5>
+                  <div className="mb-3">
+                    <label className="form-label small fw-semibold">Status</label>
+                    <select className="form-select" value={status} onChange={e => setStatus(e.target.value)}>
+                      <option value="verified">Verified & Approved</option>
+                      <option value="seat_allotted">Provisional Seat Allotted</option>
+                      <option value="under_review">Under Scrutiny</option>
+                      <option value="correction_required">Correction Required</option>
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label small fw-semibold">Allot Branch</label>
+                    <select className="form-select" value={branch} onChange={e => setBranch(e.target.value)}>
+                      {INITIAL_PROGRAMS.map(p => <option key={p.id} value={p.name}>{p.name}</option>)}
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label small fw-semibold">Remarks</label>
+                    <textarea className="form-control" rows="3" value={remarks} onChange={e => setRemarks(e.target.value)}></textarea>
+                  </div>
+
+                  <button className="btn btn-iem-primary w-100 py-2 fw-bold" onClick={handleSave}>Save Decision & Endorse</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- MAIN APP ROOT ---
+    function App() {
+      const [currentPage, setCurrentPage] = useState('home');
+      const [authUser, setAuthUser] = useState(null);
+      const [applicantData, setApplicantData] = useState(INITIAL_APPLICANT);
+      const [applicantsList, setApplicantsList] = useState(SAMPLE_ALL_APPLICANTS);
+      const [selectedApplicantId, setSelectedApplicantId] = useState('usr_01');
+
+      useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, [currentPage]);
+
+      const renderPage = () => {
+        switch (currentPage) {
+          case 'home': return <HomePage setCurrentPage={setCurrentPage} setAuthUser={setAuthUser} />;
+          case 'register': return <RegisterPage setCurrentPage={setCurrentPage} setAuthUser={setAuthUser} setApplicantData={setApplicantData} />;
+          case 'login': return <LoginPage setCurrentPage={setCurrentPage} setAuthUser={setAuthUser} />;
+          case 'forgot-password': return <ForgotPasswordPage setCurrentPage={setCurrentPage} />;
+          case 'applicant-dashboard': return <ApplicantDashboard applicantData={applicantData} setCurrentPage={setCurrentPage} />;
+          case 'application-form': return <ApplicationFormPage applicantData={applicantData} setApplicantData={setApplicantData} setCurrentPage={setCurrentPage} />;
+          case 'document-upload': return <DocumentUploadPage applicantData={applicantData} setApplicantData={setApplicantData} setCurrentPage={setCurrentPage} />;
+          case 'payment': return <PaymentPage applicantData={applicantData} setApplicantData={setApplicantData} setCurrentPage={setCurrentPage} />;
+          case 'application-status': return <ApplicationStatusPage applicantData={applicantData} setApplicantData={setApplicantData} setCurrentPage={setCurrentPage} />;
+          case 'admin-login': return <AdminLoginPage setCurrentPage={setCurrentPage} setAuthUser={setAuthUser} />;
+          case 'admin-dashboard': return <AdminDashboardPage applicantsList={applicantsList} setSelectedApplicantId={setSelectedApplicantId} setCurrentPage={setCurrentPage} />;
+          case 'application-verification': return <ApplicationVerificationPage selectedApplicantId={selectedApplicantId} applicantsList={applicantsList} setApplicantsList={setApplicantsList} setCurrentPage={setCurrentPage} />;
+          default: return <HomePage setCurrentPage={setCurrentPage} setAuthUser={setAuthUser} />;
+        }
+      };
+
+      return (
+        <div className="d-flex flex-column min-vh-100">
+          <Navbar 
+            currentPage={currentPage} 
+            setCurrentPage={setCurrentPage} 
+            authUser={authUser} 
+            setAuthUser={setAuthUser}
+            setSelectedApplicantId={setSelectedApplicantId}
+          />
+          <main className="flex-grow-1">{renderPage()}</main>
+          <Footer setCurrentPage={setCurrentPage} setAuthUser={setAuthUser} />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
